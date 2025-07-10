@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 
+
 // Struct for circular doubly linked list stack impementation //
 ////
 //
@@ -37,12 +38,12 @@ typedef struct s_stack
 //Utility functions for the stack
 //
 
-t_stack			*init_stack(char *name); // ok 
+void				*init_stack(t_stack *stack, char *name); // ok 
 t_node			*create_node(int value); // ok
 t_node			*pop(t_stack *stack); //	ok
-t_node			*push(t_node *new_node); // 
-int				*empty(t_stack *stack); //	
-void			*clear(t_stack *stack); //	
+int					*push(t_node *new_node); // 
+int					*empty(t_stack *stack); //	
+void				*clear(t_stack *stack); //	
 t_node			*peek(t_stack *stack); //	
 
 //
