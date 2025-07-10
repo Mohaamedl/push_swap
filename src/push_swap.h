@@ -6,7 +6,7 @@
 /*   By: mhaddadi <mhaddadi@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 18:06:21 by mhaddadi          #+#    #+#             */
-/*   Updated: 2025/07/08 19:49:10 by mhaddadi         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:28:50 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,21 @@ typedef struct s_node
 typedef struct s_stack
 {
 	size_t			size;
-	char			*name;
+	char			name;
 	t_node			*head;
-	t_node			*tail;
+	//t_node			*tail;
 } t_stack;
 
 //
 //Utility functions for the stack
 //
 
-void				*init_stack(t_stack *stack, char *name); // ok 
+void			init_stack(t_stack *stack, char name); // ok 
 t_node			*create_node(int value); // ok
 t_node			*pop(t_stack *stack); //	ok
-int					*push(t_node *new_node); // 
-int					*empty(t_stack *stack); //	
-void				*clear(t_stack *stack); //	
+int				push(t_stack *stack, t_node *new_node); // 
+int				empty(t_stack *stack); //	
+void			*clear(t_stack *stack); //	
 t_node			*peek(t_stack *stack); //	
 
 //
@@ -52,8 +52,8 @@ t_node			*peek(t_stack *stack); //
 
 
 
-t_node			pa(t_stack *a, t_stack  *b);
-t_node			pb(t_stack	*a, t_stack *b);
+t_node			*pa(t_stack *a, t_stack  *b);
+t_node			*pb(t_stack	*a, t_stack *b);
 int				sa(t_stack *a);
 int				sb(t_stack *b);
 int				ss(t_stack *a, t_stack *b);
