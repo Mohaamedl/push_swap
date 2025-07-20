@@ -9,7 +9,7 @@
 /*   Updated: 2025/07/11 21:52:53 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_swap.h"
+#include "../inc/push_swap.h"
 
 t_node	*pa(t_stack *a, t_stack *b)
 {

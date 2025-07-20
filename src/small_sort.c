@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "src/push_swap.h"
+#include "../inc/push_swap.h"
 
-int		sort_three(t_stack *stack)
+int	sort_three(t_stack *stack)
 {
 	int	n1;
 	int	n2;

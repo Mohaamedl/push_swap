@@ -6,13 +6,13 @@
 /*   By: mhaddadi <mhaddadi@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 22:50:53 by mhaddadi          #+#    #+#             */
-/*   Updated: 2025/07/12 22:51:01 by mhaddadi         ###   ########.fr       */
+/*   Updated: 2025/07/20 23:21:35 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../inc/push_swap.h"
 
-void push_chunks(t_stack *a, t_stack *b, int chunk_count)
+static void push_chunks(t_stack *a, t_stack *b, int chunk_count)
 {
 	int chunk_size = a->size / chunk_count;
 	int next_index = 0;
@@ -33,7 +33,7 @@ void push_chunks(t_stack *a, t_stack *b, int chunk_count)
 			ra(a); // nao pertence ao chunk -> avanca
 	}
 }
-void push_back_to_a(t_stack *a, t_stack *b)
+static void push_back_to_a(t_stack *a, t_stack *b)
 {
 	while (b->size > 0)
 	{

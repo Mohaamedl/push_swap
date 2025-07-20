@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../inc/push_swap.h"
 #include "../libft/libft.h"
 #include <stdio.h>
 int print_stack(t_stack *stack);
@@ -95,10 +95,10 @@ int	main(int argc, char **argv)
 	}
 
 	normalize(a);
-	//chunk_sort(a, b, 15);
+	//chunk_sort(a, b, 5);
 	//radix_sort(a, b);
-	chunk_sort_inv(a,b, 15);
-	//print_stack(a);
+	chunk_sort_inv(a,b, 5);
+	print_stack(a);
 	//print_stack(b);
 	free_stack(a);
 	free_stack(b);

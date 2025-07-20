@@ -7,7 +7,7 @@
 /*   Updated: 2025/07/10 15:32:43 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_swap.h"
+#include "../inc/push_swap.h"
 #include <stdio.h>
 #include <time.h>
 t_node	*create_node(int node_value)
