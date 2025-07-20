@@ -15,38 +15,94 @@
 #include <stdio.h>
 int print_stack(t_stack *stack);
 
-int	main(int argc, char ** argv)
+int	is_valid_integer(char *s)
 {
-	int				i;
-	t_stack		*a;
-	t_stack		*b;
-	t_node		*node;
+	long	num;
+	int		i;
+	int		sign;
+
+	if (!s || *s == '\0')
+		return (0);
+	i = 0;
+	sign = 1;
+	if (s[i] == '-' || s[i] == '+')
+	{
+		if (s[i] == '-')
+			sign = -1;
+		i++;
+	}
+	if (!s[i])
+		return (0);
+	num = 0;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+			return (0);
+		num = num * 10 + (s[i] - '0');
+		if ((sign == 1 && num > INT_MAX) || (sign == -1 && -num < INT_MIN))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	has_duplicate(char **argv, int current_index)
+{
+	int	i;
+
+	i = 0;
+	while (i < current_index)
+	{
+		if (ft_atoi(argv[i]) == ft_atoi(argv[current_index]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	int		i;
+	t_stack	*a;
+	t_stack	*b;
+	t_node	*node;
 
 	if (argc == 1)
 		return (0);
-	else if (argc >= 2)
-	{
-		i = 0;
-		a = (t_stack *) malloc(sizeof(t_stack));
-		b = (t_stack *) malloc(sizeof(t_stack));
 
-		init_stack(a, 'a');
-		init_stack(b, 'b');
-		while (argc > ++i)
-		{
-			node = create_node(ft_atoi(argv[i]));
-			push(a,node);
-			printf("%d\n", ft_atoi(argv[i]));
-		}
-		normalize(a);
-		printf("is sorted before: %d\n", is_sorted(a));
-		chunk_sort(a,b, 5);
-		printf("is sorted after: %d\n", is_sorted(a));
-		print_stack(a);
-		return (1);
+	a = malloc(sizeof(t_stack));
+	b = malloc(sizeof(t_stack));
+	if (!a || !b)
+	{
+		write(2, "Error\n", 6);
+		exit(EXIT_FAILURE);
 	}
-	else
-		return (0);
+	init_stack(a, 'a');
+	init_stack(b, 'b');
+
+	i = 0;
+	while (++i < argc)
+	{
+		if (!is_valid_integer(argv[i]) || has_duplicate(argv + 1, i - 1))
+		{
+			write(2, "Error\n", 6);
+			free_stack(a);
+			free_stack(b);
+			exit(EXIT_FAILURE);
+		}
+		node = create_node(ft_atoi(argv[i]));
+		push(a, node);
+	}
+
+	normalize(a);
+	//chunk_sort(a, b, 15);
+	//radix_sort(a, b);
+	chunk_sort_inv(a,b, 15);
+	//print_stack(a);
+	//print_stack(b);
+	free_stack(a);
+	free_stack(b);
+	return (0);
 }
 
 /*
@@ -98,3 +154,4 @@ int	print_stack(t_stack *stack)
 	return (0);
 
 }
+

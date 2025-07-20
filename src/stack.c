@@ -318,7 +318,7 @@ int		is_sorted(t_stack *stack)
 	while(i++ < stack -> size - 1)
 	{
 		//printf("current value: %d, next value %d\n", current -> value, current -> next -> value);
-		if (current -> value < current -> next -> value)
+		if (current -> value > current -> next -> value)
 			return(0);
 		current = current -> next;
 		bool++;
@@ -499,3 +499,60 @@ int main(void)
 	free(b);
 }
 */
+void push_chunks_inv(t_stack *a, t_stack *b, int chunk_count)
+{
+	int chunk_size = a->size / chunk_count;
+	int next_index = a->size - 1; 
+	while (a->size > 0)
+	{
+		if (a->head->index >= next_index)
+		{
+			pb(a, b);
+			rrb(b);
+			next_index--;
+		}
+		else if (a->head->index >= next_index - chunk_size)
+		{
+			pb(a, b);
+			next_index--;
+		}
+		else
+			ra(a);
+	}
+}
+
+void push_back_to_a_inv(t_stack *a, t_stack *b)
+{
+	while (b->size > 0)
+	{
+		t_node *tmp = b->head;
+		t_node *min_node = tmp;
+		size_t pos = 0, min_pos = 0;
+
+		while (tmp)
+		{
+			if (tmp->index < min_node->index)
+			{
+				min_node = tmp;
+				min_pos = pos;
+			}
+			tmp = tmp->next;
+			pos++;
+			if (tmp == b->head) break;
+		}
+
+		if (min_pos <= b->size / 2)
+			while (b->head != min_node) rb(b);
+		else
+			while (b->head != min_node) rrb(b);
+		pa(a, b);
+	}
+}
+
+int chunk_sort_inv(t_stack *a, t_stack *b, int chunk_count)
+{
+	push_chunks_inv(a, b, chunk_count);
+	push_back_to_a_inv(a, b);
+	return (1);
+}
+

@@ -17,6 +17,8 @@
 //
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
+
 
 typedef struct s_node 
 {
@@ -49,8 +51,10 @@ void				normalize(t_stack *stack); //
 int					chunk_sort(t_stack *a, t_stack *b, int chunk_count); //
 t_stack			*fill_stack(char *value);
 int					is_sorted(t_stack *stack);
+void				free_stack(t_stack *stack);
+int		radix_sort(t_stack *a, t_stack *b);
+int	chunk_sort_inv(t_stack *a, t_stack *b, int chunk_count);
 
-//
 // Utility funcions for push_swap
 //
 
