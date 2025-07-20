@@ -8,8 +8,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
-
 #include <stdio.h>
+#include <time.h>
 t_node	*create_node(int node_value)
 {
 	t_node		*node;
@@ -48,7 +48,7 @@ int		push(t_stack *stack, t_node *new_node)
 	{
 		old_node =  stack -> head;
 		last_node = old_node -> prev;
-		new_node -> next = old_node;
+new_node -> next = old_node;
 		new_node -> prev = last_node;
 		old_node -> prev = new_node;
 		last_node -> next = new_node;
@@ -163,6 +163,47 @@ void	free_stack(t_stack *stack)
 	stack -> size  = 0 ;
 }
 
+void fill_stack_random(t_stack *stack, int count)
+{
+	int		range = count * 5; // value window
+	int		*values = malloc(count * sizeof(int));
+	int		*pool = malloc((2 * range + 1) * sizeof(int));
+	t_node	*node;
+
+	if (!values || !pool)
+	{
+		free(values);
+		free(pool);
+		return;
+	}
+
+	// pool values from -range to range
+	for (int i = 0; i < 2 * range + 1; i++)
+		pool[i] = -range + i;
+
+	// shuffle pool
+	for (int i = 2 * range; i > 0; i--)
+	{
+		int j = rand() % (i + 1);
+		int tmp = pool[i];
+		pool[i] = pool[j];
+		pool[j] = tmp;
+	}
+
+	// use first unique values from pool
+	for (int i = 0; i < count; i++)
+		values[i] = pool[i];
+
+	for (int i = 0; i < count; i++)
+	{
+		node = create_node(values[i]);
+		push(stack, node);
+	}
+	free(values);
+	free(pool);
+}
+
+
 
 t_node	*pa(t_stack *a, t_stack *b)
 {
@@ -172,7 +213,7 @@ t_node	*pa(t_stack *a, t_stack *b)
 	push_node =  pop(b);
 	if (!push_node)
 		return (NULL);
-	if (push(a,push_node) != 0)
+	if (push(a,push_node) != 1)
 		return (NULL);
 	printf("pa%s\n","");
 	return (push_node);
@@ -181,12 +222,12 @@ t_node	*pa(t_stack *a, t_stack *b)
 t_node	*pb(t_stack *a, t_stack *b)
 {
 	t_node	*push_node;
-	if (!a || !b || b -> size == 0)
+	if (!a || !b || a -> size == 0)
 		return (0);
 	push_node =  pop(a);
 	if (!push_node)
 		return (NULL);
-	if (push(b,push_node) != 0)
+	if (push(b,push_node) != 1)
 		return (NULL);
 	printf("pb%s\n","");
 	return (push_node);
@@ -198,7 +239,7 @@ int		sa(t_stack *a)
 	if(a -> size < 2)
 		return (0);
 	swap_top_two(a);
-	printf("sa%s","");
+	printf("sa%s\n","");
 	return (1);
 }
 
@@ -207,7 +248,7 @@ int		sb(t_stack *b)
 	if(b -> size < 2)
 		return (0);
 	swap_top_two(b);
-	printf("sb%s","");
+	printf("sb%s\n","");
 	return (1);
 
 }
@@ -215,41 +256,44 @@ int		sb(t_stack *b)
 int		ra(t_stack *a)
 {
 	rotate_stack(a);
-	printf("ra%s", "");
+	printf("ra%s\n", "");
 	return (1);
 }
 
 int		rb(t_stack *b)
 {
 	rotate_stack(b);
-	printf("rb%s", "");
+	printf("rb%s\n", "");
 	return (1);
 }
 
 int		rr(t_stack *a, t_stack *b)
 {
-	ra(a);
-	rb(b);
-	printf("rr%s", "");
+	rotate_stack(a);
+	rotate_stack(b);
+	printf("rr%s\n", "");
 	return (1);
 }
 
 int		rra(t_stack *a)
 {
 	reverse_rotate_stack(a);
+	printf("rra%s\n","");
 	return (1);
 }
 
 int		rrb(t_stack *b)
 {
 	reverse_rotate_stack(b);
+	printf("rrb%s\n","");
 	return (1);
 }
 
 int		rrr(t_stack *a, t_stack *b)
 {
-	rra(a);
-	rrb(b);
+	reverse_rotate_stack(a);
+	reverse_rotate_stack(b);
+	printf("rrr%s\n","");
 	return (1);
 }
 
@@ -273,13 +317,65 @@ int		is_sorted(t_stack *stack)
 	i = 0;
 	while(i++ < stack -> size - 1)
 	{
-		printf("current value: %d, next value %d\n", current -> value, current -> next -> value);
+		//printf("current value: %d, next value %d\n", current -> value, current -> next -> value);
 		if (current -> value < current -> next -> value)
 			return(0);
 		current = current -> next;
 		bool++;
 	}
 	return (bool);
+}
+
+int	find_rotation_dir(t_stack *stack, int max_index)
+{
+	t_node	*tmp = stack->head;
+	size_t		forward = 0;
+	size_t		backward = 0;
+
+	// Frente
+	while (forward < stack->size && tmp->index >= max_index)
+	{
+		tmp = tmp->next;
+		forward++;
+	}
+
+	// Trás
+	tmp = stack->head->prev;
+	while (backward < stack->size && tmp->index >= max_index)
+	{
+		tmp = tmp->prev;
+		backward++;
+	}
+
+	return (forward <= backward) ? 1 : -1; // 1 = ra/rb, -1 = rra/rrb
+}
+
+void	rotate_to_top(t_stack *stack, t_node *target, char id)
+{
+	size_t	pos = 0;
+	t_node *tmp = stack->head;
+
+	while (tmp != target)
+	{
+		tmp = tmp->next;
+		pos++;
+	}
+	if (pos <= stack->size / 2)
+	{
+		while (stack->head != target)
+		{
+			if (id == 'a') ra(stack);
+			else rb(stack);
+		}
+	}
+	else
+	{
+		while (stack->head != target)
+		{
+			if (id == 'a') rra(stack);
+			else rrb(stack);
+		}
+	}
 }
 
 
@@ -295,65 +391,111 @@ int		radix_sort(t_stack *a, t_stack *b)
 	size = init_radix(&max_bits, a, &i);
 	while ((size - 1) >> max_bits)
 				max_bits++;
-	printf("maxbits : %d\n", max_bits);
-	while(i++ < (size_t) max_bits)
+	//printf("maxbits : %d\n", max_bits);
+	while(i < (size_t) max_bits)
 	{
 		j = 0;
 		while(j++ < size)
 		{
-			if ((((a -> head -> value) >> i) & 1) == 1)
+			if ((((a -> head -> index) >> i) & 1) == 1)
 				ra(a);
 			else
 				pb(a, b);
 		}
 		while (b -> size > 0)
 			pa(a, b);
+		i++;
 	}
 	return (1);
 }
 
+void push_chunks(t_stack *a, t_stack *b, int chunk_count)
+{
+	int chunk_size = a->size / chunk_count;
+	int next_index = 0;
+	while (a->size > 0)
+	{
+		if (a->head->index <= next_index)
+		{
+			pb(a, b);
+			rb(b); // menor -> fundo
+			next_index++;
+		}
+		else if (a->head->index <= next_index + chunk_size)
+		{
+			pb(a, b); // medio -> meio
+			next_index++;
+		}
+		else
+			ra(a); // nao pertence ao chunk -> avanca
+	}
+}
+void push_back_to_a(t_stack *a, t_stack *b)
+{
+	while (b->size > 0)
+	{
+		t_node *tmp = b->head;
+		t_node *max_node = tmp;
+		size_t pos = 0, max_pos = 0;
+
+		while (tmp)
+		{
+			if (tmp->index > max_node->index)
+			{
+				max_node = tmp;
+				max_pos = pos;
+			}
+			tmp = tmp->next;
+			pos++;
+			if (tmp == b->head) break;
+		}
+
+		if (max_pos <= b->size / 2)
+			while (b->head != max_node) rb(b);
+		else
+			while (b->head != max_node) rrb(b);
+		pa(a, b);
+	}
+}
+int chunk_sort(t_stack *a, t_stack *b, int chunk_count)
+{
+	push_chunks(a, b, chunk_count);
+	push_back_to_a(a, b);
+	return (1);
+}
+/*
 int main(void)
 {
-	t_stack		*a;
-	t_stack		*b;
-
-	a = (t_stack*) malloc(sizeof(t_stack));
-	b = (t_stack*) malloc(sizeof(t_stack));
+	t_stack *a = malloc(sizeof(t_stack));
+	t_stack *b = malloc(sizeof(t_stack));
+	int			num = 100;
 	init_stack(a, 'a');
 	init_stack(b, 'b');
+
+	fill_stack_random(a, num);
+	normalize(a);
 	
-	t_node *n1 = create_node(1);
-	t_node *n2 = create_node(2);
-	t_node *n3 = create_node(3);
-	t_node *n4 = create_node(43);
-	t_node *n5 = create_node(5);
-	t_node *n6 = create_node(36);
-	t_node *n7 = create_node(7);
-	t_node *n8 = create_node(8);
-	t_node *n9 = create_node(9);
-	push(a, n1);
-	push(a, n2);
-	push(a, n3);
-	push(a, n4);
-	push(a, n5);
-	push(a, n6);
-	push(a, n7);
-	push(a, n8);
-	push(a, n9);
-	normalize(a);	
-	radix_sort(a, b);
-	printf(" result %d\n", is_sorted(a));
-	t_node	*node;
-	node = a -> head -> next;
-
-	node = a -> head;
-
-	while(node -> next != a -> head)
+	if (!chunk_sort(a, b, 5))
 	{
-		printf("value: %d  index:  %d\n", node -> value, node -> index);
-		node = node -> next;
+		printf("Sorting failed.\n");
+		return 1;
 	}
-	printf("value: %d  index:  %d\n", node -> value, node -> index);
 
-
+	if (is_sorted(a))
+		printf("✅ Sorted correctly!\n");
+	else
+		printf("❌ Not sorted.\n");
+	
+	t_node *n = a->head;
+	for (int i = 0; i < num; i++)
+	{
+		printf("val: %d index: %d\n", n->value, n->index);
+		n = n->next;
+	}
+	
+	free_stack(a);
+	free_stack(b);
+	free(a);
+	free(b);
 }
+*/

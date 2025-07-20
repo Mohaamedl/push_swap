@@ -29,7 +29,7 @@ typedef struct s_node
 typedef struct s_stack
 {
 	size_t			size;
-	char			name;
+	char				name;
 	t_node			*head;
 	//t_node			*tail;
 } t_stack;
@@ -38,18 +38,21 @@ typedef struct s_stack
 //Utility functions for the stack
 //
 
-void			init_stack(t_stack *stack, char name); // ok 
+void				init_stack(t_stack *stack, char name); // ok 
 t_node			*create_node(int value); // ok
 t_node			*pop(t_stack *stack); //	ok
-int				push(t_stack *stack, t_node *new_node); // 
-int				empty(t_stack *stack); //	
-void			*clear(t_stack *stack); //	
+int					push(t_stack *stack, t_node *new_node); // 
+int					empty(t_stack *stack); //	
+void				*clear(t_stack *stack); //	
 t_node			*peek(t_stack *stack); //	
+void				normalize(t_stack *stack); //
+int					chunk_sort(t_stack *a, t_stack *b, int chunk_count); //
+t_stack			*fill_stack(char *value);
+int					is_sorted(t_stack *stack);
 
 //
 // Utility funcions for push_swap
 //
-
 
 
 t_node			*pa(t_stack *a, t_stack  *b);
