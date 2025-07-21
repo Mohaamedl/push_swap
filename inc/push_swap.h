@@ -49,7 +49,6 @@ void				*clear(t_stack *stack); //
 t_node			*peek(t_stack *stack); //	
 void				normalize(t_stack *stack); //
 int					chunk_sort(t_stack *a, t_stack *b, int chunk_count); //
-t_stack			*fill_stack(char *value);
 int					is_sorted(t_stack *stack);
 void				free_stack(t_stack *stack);
 int		radix_sort(t_stack *a, t_stack *b);

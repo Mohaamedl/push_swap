@@ -10,6 +10,8 @@
 #include "../inc/push_swap.h"
 #include <stdio.h>
 #include <time.h>
+
+
 t_node	*create_node(int node_value)
 {
 	t_node		*node;
@@ -48,7 +50,7 @@ int		push(t_stack *stack, t_node *new_node)
 	{
 		old_node =  stack -> head;
 		last_node = old_node -> prev;
-new_node -> next = old_node;
+		new_node -> next = old_node;
 		new_node -> prev = last_node;
 		old_node -> prev = new_node;
 		last_node -> next = new_node;
@@ -378,7 +380,6 @@ void	rotate_to_top(t_stack *stack, t_node *target, char id)
 	}
 }
 
-
 int		radix_sort(t_stack *a, t_stack *b)
 {
 	int			max_bits;
@@ -498,7 +499,7 @@ int main(void)
 	free(a);
 	free(b);
 }
-*/
+
 void push_chunks_inv(t_stack *a, t_stack *b, int chunk_count)
 {
 	int chunk_size = a->size / chunk_count;
@@ -555,4 +556,4 @@ int chunk_sort_inv(t_stack *a, t_stack *b, int chunk_count)
 	push_back_to_a_inv(a, b);
 	return (1);
 }
-
+*/
