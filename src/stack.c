@@ -81,6 +81,17 @@ t_node	*pop(t_stack *stack)
 	return (node_pop);
 }
 
+
+
+
+ //   End of stack functions
+//
+//
+//
+//
+//
+//
+//
 int		swap_top_two(t_stack *stack)
 {
 	t_node		*first;

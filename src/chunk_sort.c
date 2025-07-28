@@ -20,13 +20,13 @@ static void push_chunks(t_stack *a, t_stack *b, int chunk_count)
 	{
 		if (a->head->index <= next_index)
 		{
-			pb(a, b);
+			free(pb(a, b));
 			rb(b); // menor -> fundo
 			next_index++;
 		}
 		else if (a->head->index <= next_index + chunk_size)
 		{
-			pb(a, b); // medio -> meio
+			free(pb(a, b)); // medio -> meio
 			next_index++;
 		}
 		else

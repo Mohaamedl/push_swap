@@ -6,7 +6,7 @@
 #    By: mhaddadi <mhaddadi@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/20 19:51:59 by mhaddadi          #+#    #+#              #
-#    Updated: 2025/07/20 20:16:37 by mhaddadi         ###   ########.fr        #
+#    Updated: 2025/07/22 18:00:07 by mhaddadi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,18 @@ SRCS_DIR = src
 
 SRCS = \
 	$(SRCS_DIR)/push_swap.c \
-	$(SRCS_DIR)/stack.c
+	$(SRCS_DIR)/stack.c \
+	$(SRCS_DIR)/push_swap_utils.c \
+	$(SRCS_DIR)/operations_rr.c \
+	$(SRCS_DIR)/operations_rrr.c \
+	$(SRCS_DIR)/operations_s_p.c \
+	$(SRCS_DIR)/chunk_sort.c \
+	$(SRCS_DIR)/stack_utils.c \
+	$(SRCS_DIR)/small_sort.c \
+
+
+
+
 
 SRCS_BONUS = \
 	$(SRCS_DIR)/checker.c

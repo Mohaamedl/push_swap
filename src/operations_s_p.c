@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/push_swap.h"
+#inlude "../libft/libft.h"
 
 t_node	*pa(t_stack *a, t_stack *b)
 {
@@ -58,5 +59,3 @@ int		sb(t_stack *b)
 	return (1);
 
 }
-
-
