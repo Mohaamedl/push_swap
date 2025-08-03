@@ -11,52 +11,115 @@
 # **************************************************************************** #
 
 # **************************************************************************** #
-#                              LIBFT MAKEFILE                                  #
+#                              libft MAKEFILE                              #
 # **************************************************************************** #
 
-# Variables
-NAME				= libft.a
+# **************************************************************************** #
+#                                CONFIGURATION                                 #
+# **************************************************************************** #
+# === Project Configuration ===
+NAME                =   libft.a
+CC                  =   cc
+CFLAGS              =   -Wall -Wextra -Werror
 
-CC					= cc
-CFLAGS			=	-Wall -Wextra -Werror
-ARFLAGS			= rcs
-RM					= rm -f
-# Sources
+SRC_DIR     =   src
+BUILD_DIR   =   build
+INC_DIR     =   inc
 
-SRCS				= ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
-							ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c \
-							ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c \
-							ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c \
-							ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c \
-							ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c \
-							ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
-# Bonus part sources
+SRC_LIBFT = \
+	$(SRC_DIR)/libft/ft_atoi.c \
+	$(SRC_DIR)/libft/ft_bzero.c \
+	$(SRC_DIR)/libft/ft_calloc.c \
+	$(SRC_DIR)/libft/ft_isalnum.c \
+	$(SRC_DIR)/libft/ft_isalpha.c \
+	$(SRC_DIR)/libft/ft_isascii.c \
+	$(SRC_DIR)/libft/ft_isdigit.c \
+	$(SRC_DIR)/libft/ft_isprint.c \
+	$(SRC_DIR)/libft/ft_itoa.c \
+	$(SRC_DIR)/libft/ft_memchr.c \
+	$(SRC_DIR)/libft/ft_memcmp.c \
+	$(SRC_DIR)/libft/ft_memcpy.c \
+	$(SRC_DIR)/libft/ft_memmove.c \
+	$(SRC_DIR)/libft/ft_memset.c \
+	$(SRC_DIR)/libft/ft_putchar_fd.c \
+	$(SRC_DIR)/libft/ft_putendl_fd.c \
+	$(SRC_DIR)/libft/ft_putnbr_fd.c \
+	$(SRC_DIR)/libft/ft_putstr_fd.c \
+	$(SRC_DIR)/libft/ft_split.c \
+	$(SRC_DIR)/libft/ft_strchr.c \
+	$(SRC_DIR)/libft/ft_strdup.c \
+	$(SRC_DIR)/libft/ft_striteri.c \
+	$(SRC_DIR)/libft/ft_strjoin.c \
+	$(SRC_DIR)/libft/ft_strlcat.c \
+	$(SRC_DIR)/libft/ft_strlcpy.c \
+	$(SRC_DIR)/libft/ft_strlen.c \
+	$(SRC_DIR)/libft/ft_strmapi.c \
+	$(SRC_DIR)/libft/ft_strcmp.c \
+	$(SRC_DIR)/libft/ft_strncmp.c \
+	$(SRC_DIR)/libft/ft_strnstr.c \
+	$(SRC_DIR)/libft/ft_strrchr.c \
+	$(SRC_DIR)/libft/ft_strtrim.c \
+	$(SRC_DIR)/libft/ft_substr.c \
+	$(SRC_DIR)/libft/ft_tolower.c \
+	$(SRC_DIR)/libft/ft_toupper.c \
+	$(SRC_DIR)/libft/ft_lstadd_back.c \
+	$(SRC_DIR)/libft/ft_lstadd_front.c \
+	$(SRC_DIR)/libft/ft_lstclear.c \
+	$(SRC_DIR)/libft/ft_lstdelone.c \
+	$(SRC_DIR)/libft/ft_lstiter.c \
+	$(SRC_DIR)/libft/ft_lstlast.c \
+	$(SRC_DIR)/libft/ft_lstmap.c \
+	$(SRC_DIR)/libft/ft_lstnew.c \
+	$(SRC_DIR)/libft/ft_lstsize.c
 
-SRCS_BONUS	= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
-							ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
-							ft_lstmap.c
+SRC_PRINTF = \
+	$(SRC_DIR)/ft_printf/ft_printf.c \
+	$(SRC_DIR)/ft_printf/ft_conversion_handler.c \
+	$(SRC_DIR)/ft_printf/ft_parse_format.c \
+	$(SRC_DIR)/ft_printf/ft_printchar.c \
+	$(SRC_DIR)/ft_printf/ft_printhex.c \
+	$(SRC_DIR)/ft_printf/ft_printnbr.c \
+	$(SRC_DIR)/ft_printf/ft_printpercent.c \
+	$(SRC_DIR)/ft_printf/ft_printptr.c \
+	$(SRC_DIR)/ft_printf/ft_printstr.c \
+	$(SRC_DIR)/ft_printf/ft_printunbr.c \
+	$(SRC_DIR)/ft_printf/ft_putnchar.c \
+	$(SRC_DIR)/ft_printf/ft_uitoa.c \
+	$(SRC_DIR)/ft_printf/ft_hex_helper.c
 
-OBJS        = $(SRCS:.c=.o)
-OBJS_BONUS  = $(SRCS_BONUS:.c=.o)
+SRC_GNL = \
+	$(SRC_DIR)/gnl/get_next_line.c \
+	$(SRC_DIR)/gnl/get_next_line_utils.c
 
-# Targets
+SRC_BONUS = \
+	$(SRC_DIR)/gnl/get_next_line_bonus.c \
+	$(SRC_DIR)/gnl/get_next_line_utils_bonus.c
 
+SRC = $(SRC_LIBFT) $(SRC_PRINTF) $(SRC_GNL)
+
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+OBJ_BONUS = $(SRC_BONUS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+
+# === Rules ===
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	ar $(ARFLAGS) $@ $^
+$(NAME): $(OBJ)
+	@mkdir -p $(BUILD_DIR)
+	ar rcs $@ $^
 
-%.o : %.c
-	$(CC) -c $(CFLAGS) $^ -o $@ 
+bonus: $(OBJ_BONUS)
+	@mkdir -p $(BUILD_DIR)
+	ar rcs $(NAME) $^
 
-bonus: $(NAME) $(OBJS_BONUS)
-	ar $(ARFLAGS) $(NAME) $(OBJS_BONUS)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS) $(OBJS_BONUS)
+	rm -rf $(BUILD_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 

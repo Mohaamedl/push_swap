@@ -6,7 +6,7 @@
 /*   By: mhaddadi <mhaddadi@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:20:38 by mhaddadi          #+#    #+#             */
-/*   Updated: 2025/06/25 19:57:28 by mhaddadi         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:20:53 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ int				ft_isascii(int c);
 int				ft_isprint(int c);
 /* String functions */
 
-size_t			ft_strlen(const char *s);
+size_t		ft_strlen(const char *s);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strnstr(const char *big, const char *little, size_t len);
-size_t			ft_strlcpy(char *dst, const char *src, size_t size);
-size_t			ft_strlcat(char *dst, const char *src, size_t n);
-
+size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+size_t		ft_strlcat(char *dst, const char *src, size_t n);
+int				ft_strcmp(const char *s1, const char *s2);
 /* Memory functions */
 void			*ft_memset(void *s, int c, size_t n);
 void			ft_bzero(void *s, size_t n);

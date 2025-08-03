@@ -1,16 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*   ft_printpercent.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaddadi <mhaddadi@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/21 18:52:26 by mhaddadi          #+#    #+#             */
-/*   Updated: 2025/07/21 18:54:58 by mhaddadi         ###   ########.fr       */
+/*   Created: 2025/05/05 14:23:22 by mhaddadi          #+#    #+#             */
+/*   Updated: 2025/05/05 14:29:47 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/push_swap.h";
+#include "../../inc/ft_printf.h"
 
-
-
+int	ft_printpercent(t_format *f)
+{
+	(void)f;
+	return (write(1, "%", 1));
+}

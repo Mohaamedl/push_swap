@@ -11,16 +11,59 @@
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
-#include "../libft/libft.h"
+//#include "../libft/libft.h"
+#include "../libft/inc/libft.h"
+#include "../libft/inc/ft_printf.h"
 #include <stdio.h>
 
 //static int print_stack(t_stack *stack);
 
 static int	is_valid_integer(char *s);
 
-static int	has_duplicate(char **argv, int current_index, int argc);
+//static int	has_duplicate(char **argv, int current_index, int argc);
 
-static int	fill_stack(t_stack *a, t_stack *b, char **argv, int argc);
+int	fill_stack(t_stack *a, char **argv, int argc);
+
+void free_split(char **arr)
+{
+    int i = 0;
+    if (!arr) return;
+    while (arr[i])
+        free(arr[i++]);
+    free(arr);
+}
+
+int has_duplicate_str(char **argv, char *val, int arg_i, int word_j)
+{
+    int i = 1; // começar no primeiro argumento real
+    while (argv[i])
+    {
+        char **split = ft_split(argv[i], ' ');
+        if (!split)
+            return 1; 
+
+        int j = 0;
+        while (split[j])
+        {
+            // Ignorar o valor atual (arg_i, word_j)
+            if (i == arg_i && j == word_j)
+            {
+                j++;
+                continue;
+            }
+            if (ft_strncmp(split[j], val, ft_strlen(val)) == 0)
+            {
+                free_split(split);
+                return 1;
+            }
+            j++;
+        }
+        free_split(split);
+        i++;
+    }
+    return 0;
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -38,7 +81,7 @@ int	main(int argc, char **argv)
 	}
 	init_stack(a, 'a');
 	init_stack(b, 'b');
-	if (fill_stack(a, b, argv, argc) == 0)
+	if (fill_stack(a, argv, argc) == 0)
 		return (0);
 	normalize(a);
 	if (is_sorted(a) == 0)
@@ -47,8 +90,8 @@ int	main(int argc, char **argv)
 	free_stack(b);
 	return (0);
 }
-
-static int	fill_stack(t_stack *a, t_stack *b, char **argv, int argc)
+/*
+int	fill_stack(t_stack *a, t_stack *b, char **argv, int argc)
 {
 	int		i;
 	t_node	*node;
@@ -69,6 +112,35 @@ static int	fill_stack(t_stack *a, t_stack *b, char **argv, int argc)
 	if (a -> size == 0)
 		return (0);
 	return (1);
+}
+
+*/
+
+int	fill_stack(t_stack *a, char **argv, int argc)
+{
+	char	**split;
+	t_node	*node;
+	int		i, j;
+
+	i = argc;
+	while (--i > 0)
+	{
+		split = ft_split(argv[i], ' ');
+		if (!split || !*split)
+			return (write(2, "Error\n", 6), free_split(split), 0);
+		j = -1;
+		while (split[++j])
+		{
+			if (!is_valid_integer(split[j]) || has_duplicate_str(argv, split[j], i, j))
+				return (write(2, "Error\n", 6), free_split(split), 0);
+			node = create_node(ft_atoi(split[j]));
+			if (!node)
+				return (write(2, "Error\n", 6), free_split(split), 0);
+			push(a, node);  // Ordem invertida: último no topo
+		}
+		free_split(split);
+	}
+	return (a->size > 0);
 }
 
 static int	is_valid_integer(char *s)
@@ -98,7 +170,7 @@ static int	is_valid_integer(char *s)
 	}
 	return (1);
 }
-
+/*
 static int	has_duplicate(char **argv, int current_index, int argc)
 {
 	int	i;
@@ -112,7 +184,7 @@ static int	has_duplicate(char **argv, int current_index, int argc)
 	}
 	return (0);
 }
-/*
+
 int	main(int argc, char **argv)
 {
 	int i = 0;

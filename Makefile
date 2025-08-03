@@ -21,6 +21,7 @@ RM          = rm -rf
 LIBFT_DIR   = libft
 LIBFT       = $(LIBFT_DIR)/libft.a
 BUILD_DIR   = build
+BONUS_NAME  = checker
 
 # Source code
 SRCS_DIR = src
@@ -30,11 +31,17 @@ SRCS = \
 	$(SRCS_DIR)/stack.c
 
 SRCS_BONUS = \
-	$(SRCS_DIR)/checker.c
+	$(SRCS_DIR)/checker/checker_bonus.c \
+	$(SRCS_DIR)/checker/stack_bonus.c
 
 # Object files
 OBJS       = $(SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/%.o)
 OBJS_BONUS = $(SRCS_BONUS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/%.o)
+
+create_dirs:
+	@mkdir -p build/checker
+	@mkdir -p build/pushswap
+
 
 # Targets
 all: $(NAME)
@@ -48,6 +55,12 @@ $(NAME): $(OBJS)
 # Compile .c to .o in build/
 $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -c $< -o $@
+
+bonus: $(BONUS_NAME)
+
+$(BONUS_NAME): create_dirs $(OBJS_BONUS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) -L$(LIBFT_DIR) -lft -o $(BONUS_NAME)
+
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
@@ -64,6 +77,7 @@ fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
+
 
 .PHONY: all clean fclean re bonus
 

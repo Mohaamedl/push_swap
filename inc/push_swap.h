@@ -53,7 +53,7 @@ int					is_sorted(t_stack *stack);
 void				free_stack(t_stack *stack);
 int		radix_sort(t_stack *a, t_stack *b);
 int	chunk_sort_inv(t_stack *a, t_stack *b, int chunk_count);
-
+int					fill_stack(t_stack *a, char **argv, int argc);
 // Utility funcions for push_swap
 //
 
