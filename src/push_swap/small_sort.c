@@ -6,11 +6,13 @@
 /*   By: mhaddadi <mhaddadi@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:01:07 by mhaddadi          #+#    #+#             */
-/*   Updated: 2025/07/10 17:41:32 by mhaddadi         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:37:47 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/push_swap.h"
+#include "../../inc/push_swap.h"
+
+static int		find_min(t_stack *stack);
 
 int	sort_three(t_stack *stack)
 {
@@ -42,7 +44,7 @@ int	sort_three(t_stack *stack)
 
 void	index_zero(t_stack *a, t_stack *b)
 {
-	rra(a, b);
+	rra(a);
 	pb(a, b);
 	sort_three(a);
 	pa(a, b);
@@ -52,7 +54,7 @@ int		sort_four(t_stack *a, t_stack *b)
 {
 	int		max_index;
 
-	max_index = find_max(a);
+	max_index = find_min(a);
 	if (max_index == 0)
 	{
 		index_zero(a, b);
@@ -64,14 +66,14 @@ int		sort_four(t_stack *a, t_stack *b)
 	}
 	else if (max_index == 2)
 	{
-		ra(a, b);
+		ra(a);
 		pb(a, b);
 		sort_three(a);
 	}
 	else if (max_index == 3)
 	{
 		pb(a, b);
-		sort_three(a, b);
+		sort_three(a);
 		pa(a, b);
 	}
 	return (max_index);
@@ -81,15 +83,16 @@ int		sort_five(t_stack *a, t_stack *b)
 {
 	int		max_index;
 
-	max_index = find_max(a);
+	max_index = find_min(a);
 	if (max_index == 0)
 	{
-		ra(a, b);
+		ra(a);
 		pb(a, b);
-		sprt_four(a, b);
+		sort_four(a, b);
 		pa(a, b);
 	}
-	else if (index == 1)
+
+	return (1);
 
 }
 
@@ -125,7 +128,3 @@ static int		find_max(t_stack *stack)
 	}
 	return (-1);
 }
-
-
-
-

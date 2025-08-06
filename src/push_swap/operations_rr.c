@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations_rrr.c                                   :+:      :+:    :+:   */
+/*   operations_rr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaddadi <mhaddadi@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/20 23:20:47 by mhaddadi          #+#    #+#             */
-/*   Updated: 2025/07/20 23:20:57 by mhaddadi         ###   ########.fr       */
+/*   Created: 2025/07/20 23:21:14 by mhaddadi          #+#    #+#             */
+/*   Updated: 2025/07/20 23:21:22 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/push_swap.h"
+#include "../../inc/push_swap.h"
 
-int		rra(t_stack *a)
+int		ra(t_stack *a)
 {
-	reverse_rotate_stack(a);
-	printf("rra%s\n","");
+	rotate_stack(a);
+	ft_printf("ra%s\n", "");
 	return (1);
 }
 
-int		rrb(t_stack *b)
+int		rb(t_stack *b)
 {
-	reverse_rotate_stack(b);
-	printf("rrb%s\n","");
+	rotate_stack(b);
+	ft_printf("rb%s\n", "");
 	return (1);
 }
 
-int		rrr(t_stack *a, t_stack *b)
+int		rr(t_stack *a, t_stack *b)
 {
-	reverse_rotate_stack(a);
-	reverse_rotate_stack(b);
-	printf("rrr%s\n","");
+	rotate_stack(a);
+	rotate_stack(b);
+	ft_printf("rr%s\n", "");
 	return (1);
 }
+

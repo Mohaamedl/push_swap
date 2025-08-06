@@ -6,15 +6,11 @@
 /*   By: mhaddadi <mhaddadi@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 06:45:36 by mhaddadi          #+#    #+#             */
-/*   Updated: 2025/07/14 07:01:21 by mhaddadi         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:33:18 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/push_swap.h"
-//#include "../libft/libft.h"
-#include "../libft/inc/libft.h"
-#include "../libft/inc/ft_printf.h"
-#include <stdio.h>
+#include "../../inc/push_swap.h"
 
 //static int print_stack(t_stack *stack);
 
@@ -113,7 +109,6 @@ int	fill_stack(t_stack *a, t_stack *b, char **argv, int argc)
 		return (0);
 	return (1);
 }
-
 */
 
 int	fill_stack(t_stack *a, char **argv, int argc)

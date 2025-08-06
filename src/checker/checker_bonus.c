@@ -9,10 +9,8 @@
 /*   Updated: 2025/08/03 11:15:12 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
 #include "../../inc/checker_bonus.h"
-#include "../../libft/inc/libft.h"
-#include "../../libft/inc/get_next_line.h"
+
 int	stack_is_empty(t_stack *stack)
 {
 	return (stack == NULL || stack->size == 0);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/push_swap.h"
+#include "../../inc/push_swap.h"
 
 static void push_chunks(t_stack *a, t_stack *b, int chunk_count)
 {
@@ -21,18 +21,19 @@ static void push_chunks(t_stack *a, t_stack *b, int chunk_count)
 		if (a->head->index <= next_index)
 		{
 			pb(a, b);
-			rb(b); // menor -> fundo
+			rb(b);
 			next_index++;
 		}
 		else if (a->head->index <= next_index + chunk_size)
 		{
-			pb(a, b); // medio -> meio
+			pb(a, b);
 			next_index++;
 		}
 		else
-			ra(a); // nao pertence ao chunk -> avanca
+			ra(a);
 	}
 }
+
 static void push_back_to_a(t_stack *a, t_stack *b)
 {
 	while (b->size > 0)
@@ -60,10 +61,10 @@ static void push_back_to_a(t_stack *a, t_stack *b)
 		pa(a, b);
 	}
 }
+
 int chunk_sort(t_stack *a, t_stack *b, int chunk_count)
 {
 	push_chunks(a, b, chunk_count);
 	push_back_to_a(a, b);
 	return (1);
 }
-
