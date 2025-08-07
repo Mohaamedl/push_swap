@@ -14,56 +14,57 @@
 t_node	*pa(t_stack *a, t_stack *b)
 {
 	t_node	*push_node;
-	if (!a || !b || b -> size == 0)
+
+	if (!a || !b || b->size == 0)
 		return (0);
-	push_node =  pop(b);
+	push_node = pop(b);
 	if (!push_node)
 		return (NULL);
-	if (push(a,push_node) != 1)
+	if (push(a, push_node) != 1)
 		return (NULL);
-	ft_printf("pa%s\n","");
+	ft_printf("pa%s\n", "");
 	return (push_node);
 }
 
 t_node	*pb(t_stack *a, t_stack *b)
 {
 	t_node	*push_node;
-	if (!a || !b || a -> size == 0)
+
+	if (!a || !b || a->size == 0)
 		return (0);
-	push_node =  pop(a);
+	push_node = pop(a);
 	if (!push_node)
 		return (NULL);
-	if (push(b,push_node) != 1)
+	if (push(b, push_node) != 1)
 		return (NULL);
-	ft_printf("pb%s\n","");
+	ft_printf("pb%s\n", "");
 	return (push_node);
-	
 }
 
-int		sa(t_stack *a)
+int	sa(t_stack *a)
 {
-	if(a -> size < 2)
+	if (a->size < 2)
 		return (0);
 	swap_top_two(a);
-	ft_printf("sa%s\n","");
+	ft_printf("sa%s\n", "");
 	return (1);
 }
 
-int		sb(t_stack *b)
+int	sb(t_stack *b)
 {
-	if(b -> size < 2)
+	if (b->size < 2)
 		return (0);
 	swap_top_two(b);
-	ft_printf("sb%s\n","");
+	ft_printf("sb%s\n", "");
 	return (1);
 }
 
-int		ss(t_stack *a, t_stack *b)
+int	ss(t_stack *a, t_stack *b)
 {
-	if(a -> size < 2 || b -> size < 2)
+	if (a->size < 2 || b->size < 2)
 		return (0);
 	swap_top_two(a);
 	swap_top_two(b);
-	ft_printf("ss%s\n","");
+	ft_printf("ss%s\n", "");
 	return (1);
 }

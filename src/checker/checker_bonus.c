@@ -16,7 +16,7 @@ int	stack_is_empty(t_stack *stack)
 	return (stack == NULL || stack->size == 0);
 }
 
-static int	is_valid_integer(const char *str)
+static int	is_valid_integer_checker(const char *str)
 {
 	int i = 0;
 
@@ -82,7 +82,7 @@ int	ini_stack(t_stack *a, int argc, char **argv)
 	i = argc - 1;
 	while (i > 0)
 	{
-		if (!is_valid_integer(argv[i]))
+		if (!is_valid_integer_checker(argv[i]))
 			return (0);
 		value = ft_atol(argv[i]);
 		if (value < INT_MIN || value > INT_MAX)

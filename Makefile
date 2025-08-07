@@ -27,14 +27,17 @@ BONUS_NAME  = checker
 SRCS_DIR = src
 
 SRCS = \
-	$(SRCS_DIR)/push_swap/push_swap.c \ 
+	$(SRCS_DIR)/push_swap/push_swap.c \
+	$(SRCS_DIR)/push_swap/input_validation.c \
+	$(SRCS_DIR)/push_swap/number_validation.c \
+	$(SRCS_DIR)/push_swap/sort_utils.c \
 	$(SRCS_DIR)/push_swap/stack.c \
 	$(SRCS_DIR)/push_swap/stack_utils.c \
 	$(SRCS_DIR)/push_swap/operations_s_p.c \
 	$(SRCS_DIR)/push_swap/operations_rr.c \
 	$(SRCS_DIR)/push_swap/operations_rrr.c \
 	$(SRCS_DIR)/push_swap/small_sort.c \
-	$(SRCS_DIR)/push_swap/chunksort.c
+	$(SRCS_DIR)/push_swap/chunk_sort.c
 
 
 SRCS_BONUS = \
@@ -42,30 +45,31 @@ SRCS_BONUS = \
 	$(SRCS_DIR)/checker/stack_bonus.c
 
 # Object files
-OBJS       = $(SRCS:$(SRCS_DIR)/push_swap/%.c=$(BUILD_DIR)/push_swap/%.o)
-OBJS_BONUS = $(SRCS_BONUS:$(SRCS_DIR)/checker/%.c=$(BUILD_DIR)/checker/%.o)
+OBJS       = $(SRCS:src/push_swap/%.c=build/push_swap/%.o)
+OBJS_BONUS = $(SRCS_BONUS:src/checker/%.c=build/checker/%.o)
+
+# Targets
+all: $(NAME) 
 
 create_dirs:
 	@mkdir -p build/checker
-	@mkdir -p build/pushswap
-
-
-# Targets
-all: $(NAME)
+	@mkdir -p build/push_swap
 
 bonus: $(BONUS_NAME)
 
-$(NAME): create_dirs $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
 
 # Compile .c to .o in build/
 $(BUILD_DIR)/push_swap/%.o: $(SRCS_DIR)/push_swap/%.c | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -c $< -o $@
+	@mkdir -p build/push_swap
+	$(CC) $(CFLAGS) -I inc -I$(LIBFT_DIR)/inc -c $< -o $@
 
 $(BUILD_DIR)/checker/%.o: $(SRCS_DIR)/checker/%.c | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -c $< -o $@
+	@mkdir -p build/checker
+	$(CC) $(CFLAGS) -I inc -I$(LIBFT_DIR)/inc -c $< -o $@
 
-$(BONUS_NAME): create_dirs $(OBJS_BONUS) $(LIBFT)
+$(BONUS_NAME): $(OBJS_BONUS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_BONUS) -L$(LIBFT_DIR) -lft -o $(BONUS_NAME)
 
 $(BUILD_DIR):
@@ -80,9 +84,10 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(BONUS_NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus create_dirs

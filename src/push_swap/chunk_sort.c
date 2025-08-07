@@ -12,10 +12,13 @@
 
 #include "../../inc/push_swap.h"
 
-static void push_chunks(t_stack *a, t_stack *b, int chunk_count)
+static void	push_chunks(t_stack *a, t_stack *b, int chunk_count)
 {
-	int chunk_size = a->size / chunk_count;
-	int next_index = 0;
+	int	chunk_size;
+	int	next_index;
+
+	chunk_size = a->size / chunk_count;
+	next_index = 0;
 	while (a->size > 0)
 	{
 		if (a->head->index <= next_index)
@@ -34,35 +37,54 @@ static void push_chunks(t_stack *a, t_stack *b, int chunk_count)
 	}
 }
 
-static void push_back_to_a(t_stack *a, t_stack *b)
+static t_node	*find_max_node(t_stack *b, int *max_pos)
 {
+	t_node	*tmp;
+	t_node	*max_node;
+	int		pos;
+
+	tmp = b->head;
+	max_node = tmp;
+	pos = 0;
+	*max_pos = 0;
+	while (tmp)
+	{
+		if (tmp->index > max_node->index)
+		{
+			max_node = tmp;
+			*max_pos = pos;
+		}
+		tmp = tmp->next;
+		pos++;
+		if (tmp == b->head)
+			break ;
+	}
+	return (max_node);
+}
+
+static void	push_back_to_a(t_stack *a, t_stack *b)
+{
+	t_node	*max_node;
+	int		max_pos;
+
 	while (b->size > 0)
 	{
-		t_node *tmp = b->head;
-		t_node *max_node = tmp;
-		int pos = 0, max_pos = 0;
-
-		while (tmp)
+		max_node = find_max_node(b, &max_pos);
+		if (max_pos <= (int)(b->size / 2))
 		{
-			if (tmp->index > max_node->index)
-			{
-				max_node = tmp;
-				max_pos = pos;
-			}
-			tmp = tmp->next;
-			pos++;
-			if (tmp == b->head) break;
+			while (b->head != max_node)
+				rb(b);
 		}
-
-		if (max_pos <= b->size / 2)
-			while (b->head != max_node) rb(b);
 		else
-			while (b->head != max_node) rrb(b);
+		{
+			while (b->head != max_node)
+				rrb(b);
+		}
 		pa(a, b);
 	}
 }
 
-int chunk_sort(t_stack *a, t_stack *b, int chunk_count)
+int	chunk_sort(t_stack *a, t_stack *b, int chunk_count)
 {
 	push_chunks(a, b, chunk_count);
 	push_back_to_a(a, b);

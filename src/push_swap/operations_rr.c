@@ -12,25 +12,24 @@
 
 #include "../../inc/push_swap.h"
 
-int		ra(t_stack *a)
+int	ra(t_stack *a)
 {
 	rotate_stack(a);
 	ft_printf("ra%s\n", "");
 	return (1);
 }
 
-int		rb(t_stack *b)
+int	rb(t_stack *b)
 {
 	rotate_stack(b);
 	ft_printf("rb%s\n", "");
 	return (1);
 }
 
-int		rr(t_stack *a, t_stack *b)
+int	rr(t_stack *a, t_stack *b)
 {
 	rotate_stack(a);
 	rotate_stack(b);
 	ft_printf("rr%s\n", "");
 	return (1);
 }
-

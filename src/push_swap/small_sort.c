@@ -12,119 +12,92 @@
 
 #include "../../inc/push_swap.h"
 
-static int		find_min(t_stack *stack);
-
 int	sort_three(t_stack *stack)
 {
 	int	n1;
 	int	n2;
 	int	n3;
 
-	n3 = stack -> head -> value;
-	n2 = stack -> head -> next -> value;
-	n1 = stack -> head -> next -> next -> value;
-	if (n3 < n2 && n3 > n1)
+	n3 = stack->head->index;
+	n2 = stack->head->next->index;
+	n1 = stack->head->next->next->index;
+	if (n3 > n2 && n2 < n1 && n3 < n1)
 		sa(stack);
-	else if (n1 > n2 && n2 >n3)
+	else if (n3 > n2 && n2 > n1 && n3 > n1)
 	{
-		ra(stack);
 		sa(stack);
+		rra(stack);
 	}
-	else if (n1 < n3 && n1 > n2)
+	else if (n3 > n2 && n2 < n1 && n3 > n1)
+		ra(stack);
+	else if (n3 < n2 && n2 > n1 && n3 < n1)
 	{
-		rra(stack);
 		sa(stack);
-	}
-	else if (n1 > n3 && n3 > n2)
-		rra(stack);
-	else if (n2 > n1 && n1 > n3)
 		ra(stack);
+	}
+	else if (n3 < n2 && n2 > n1 && n3 > n1)
+		rra(stack);
 	return (0);
 }
 
-void	index_zero(t_stack *a, t_stack *b)
+int	sort_four(t_stack *a, t_stack *b)
 {
-	rra(a);
-	pb(a, b);
-	sort_three(a);
-	pa(a, b);
-}
+	int	min_index;
 
-int		sort_four(t_stack *a, t_stack *b)
-{
-	int		max_index;
-
-	max_index = find_min(a);
-	if (max_index == 0)
+	min_index = find_min(a);
+	if (min_index == 0)
+		pb(a, b);
+	else if (min_index == 1)
 	{
-		index_zero(a, b);
+		ra(a);
+		pb(a, b);
 	}
-	else if (max_index == 1)
+	else if (min_index == 2)
+	{
+		ra(a);
+		ra(a);
+		pb(a, b);
+	}
+	else if (min_index == 3)
 	{
 		rra(a);
-		index_zero(a, b);
-	}
-	else if (max_index == 2)
-	{
-		ra(a);
 		pb(a, b);
-		sort_three(a);
 	}
-	else if (max_index == 3)
-	{
-		pb(a, b);
-		sort_three(a);
-		pa(a, b);
-	}
-	return (max_index);
-}
-
-int		sort_five(t_stack *a, t_stack *b)
-{
-	int		max_index;
-
-	max_index = find_min(a);
-	if (max_index == 0)
-	{
-		ra(a);
-		pb(a, b);
-		sort_four(a, b);
-		pa(a, b);
-	}
-
+	sort_three(a);
+	pa(a, b);
 	return (1);
-
 }
 
-static int		find_min(t_stack *stack)
+int	sort_five(t_stack *a, t_stack *b)
 {
-	int		index;
-	t_node	*node;
+	int	min_index;
 
-	index = 0;
-	node = stack -> head -> next;
-	while (node != stack -> head)
-	{
-		if (node -> index == 0)
-			return (index);
-		index++;
-	}
-	return (-1);
-
+	min_index = find_min(a);
+	if (min_index != 0)
+		move_min_to_top(a, min_index);
+	pb(a, b);
+	normalize(a);
+	sort_four(a, b);
+	pa(a, b);
+	return (1);
 }
 
-static int		find_max(t_stack *stack)
+int	solve_stack(t_stack *a, t_stack *b)
 {
-	int		index;
-	t_node	*node;
-
-	index = 0;
-	node = stack -> head -> next;
-	while (node != stack -> head)
+	if (is_sorted(a))
+		return (1);
+	if (a->size == 2)
 	{
-		if (node -> index == (stack -> size - 1))
-			return (index);
-		index++;
+		if (a->head->index > a->head->next->index)
+			sa(a);
 	}
-	return (-1);
+	else if (a->size == 3)
+		sort_three(a);
+	else if (a->size == 4)
+		sort_four(a, b);
+	else if (a->size == 5)
+		sort_five(a, b);
+	else
+		chunk_sort(a, b, get_chunk_count(a->size));
+	return (1);
 }
