@@ -56,7 +56,7 @@ int	get_chunk_count(int size)
 	if (size <= 100)
 		return (5);
 	else if (size <= 500)
-		return (10);
-	else
 		return (16);
+	else
+		return (20);
 }

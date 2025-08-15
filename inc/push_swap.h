@@ -50,7 +50,7 @@ int					is_sorted(t_stack *stack);
 void				free_stack(t_stack *stack);
 int					radix_sort(t_stack *a, t_stack *b);
 int					chunk_sort_inv(t_stack *a, t_stack *b, int chunk_count);
-int					fill_stack(t_stack *a, char **argv, int argc);
+int	fill_stack(t_stack *a, char **argv, int argc, int start);
 int					has_duplicate_str(char **argv, char *val, int arg_i,
 						int word_j);
 int					is_valid_integer(const char *s);
