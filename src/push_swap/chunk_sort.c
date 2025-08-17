@@ -23,17 +23,17 @@ static void	push_chunks(t_stack *a, t_stack *b, int chunk_count)
 	{
 		if (a->head->index <= next_index)
 		{
-			pb(a, b);
-			rb(b);
+			pb(a, b, 1);
+			rb(b, 1);
 			next_index++;
 		}
 		else if (a->head->index <= next_index + chunk_size)
 		{
-			pb(a, b);
+			pb(a, b, 1);
 			next_index++;
 		}
 		else
-			ra(a);
+			ra(a, 1);
 	}
 }
 
@@ -73,14 +73,14 @@ static void	push_back_to_a(t_stack *a, t_stack *b)
 		if (max_pos <= (int)(b->size / 2))
 		{
 			while (b->head != max_node)
-				rb(b);
+				rb(b, 1);
 		}
 		else
 		{
 			while (b->head != max_node)
-				rrb(b);
+				rrb(b, 1);
 		}
-		pa(a, b);
+		pa(a, b, 1);
 	}
 }
 

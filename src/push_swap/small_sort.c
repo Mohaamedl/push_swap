@@ -12,7 +12,7 @@
 
 #include "../../inc/push_swap.h"
 
-int	sort_three(t_stack *stack)
+static int	sort_three(t_stack *stack)
 {
 	int	n1;
 	int	n2;
@@ -22,64 +22,76 @@ int	sort_three(t_stack *stack)
 	n2 = stack->head->next->index;
 	n1 = stack->head->next->next->index;
 	if (n3 > n2 && n2 < n1 && n3 < n1)
-		sa(stack);
+		sa(stack, 1);
 	else if (n3 > n2 && n2 > n1 && n3 > n1)
 	{
-		sa(stack);
-		rra(stack);
+		sa(stack, 1);
+		rra(stack, 1);
 	}
 	else if (n3 > n2 && n2 < n1 && n3 > n1)
-		ra(stack);
+		ra(stack, 1);
 	else if (n3 < n2 && n2 > n1 && n3 < n1)
 	{
-		sa(stack);
-		ra(stack);
+		sa(stack, 1);
+		ra(stack, 1);
 	}
 	else if (n3 < n2 && n2 > n1 && n3 > n1)
-		rra(stack);
+		rra(stack, 1);
 	return (0);
 }
 
-int	sort_four(t_stack *a, t_stack *b)
+static int	sort_four(t_stack *a, t_stack *b)
 {
 	int	min_index;
 
 	min_index = find_min(a);
 	if (min_index == 0)
-		pb(a, b);
+		pb(a, b, 1);
 	else if (min_index == 1)
 	{
-		ra(a);
-		pb(a, b);
+		ra(a, 1);
+		pb(a, b, 1);
 	}
 	else if (min_index == 2)
 	{
-		ra(a);
-		ra(a);
-		pb(a, b);
+		ra(a, 1);
+		ra(a, 1);
+		pb(a, b, 1);
 	}
 	else if (min_index == 3)
 	{
-		rra(a);
-		pb(a, b);
+		rra(a, 1);
+		pb(a, b, 1);
 	}
 	sort_three(a);
-	pa(a, b);
+	pa(a, b, 1);
 	return (1);
 }
 
-int	sort_five(t_stack *a, t_stack *b)
+static int	sort_five(t_stack *a, t_stack *b)
 {
 	int	min_index;
 
 	min_index = find_min(a);
 	if (min_index != 0)
 		move_min_to_top(a, min_index);
-	pb(a, b);
+	pb(a, b, 1);
 	normalize(a);
 	sort_four(a, b);
-	pa(a, b);
+	pa(a, b, 1);
 	return (1);
+}
+
+static int	get_chunk_count(int size)
+{
+	if (size <= 10)
+		return (1);
+	else if (size <= 100)
+		return (2 + size / 16);
+	else if (size <= 500)
+		return (2 + size / 32);
+	else
+		return (size / 32);
 }
 
 int	solve_stack(t_stack *a, t_stack *b)
@@ -89,7 +101,7 @@ int	solve_stack(t_stack *a, t_stack *b)
 	if (a->size == 2)
 	{
 		if (a->head->index > a->head->next->index)
-			sa(a);
+			sa(a, 1);
 	}
 	else if (a->size == 3)
 		sort_three(a);

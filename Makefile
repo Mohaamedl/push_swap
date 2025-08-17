@@ -42,7 +42,14 @@ SRCS = \
 
 SRCS_BONUS = \
 	$(SRCS_DIR)/checker/checker_bonus.c \
-	$(SRCS_DIR)/checker/stack_bonus.c
+	$(SRCS_DIR)/checker/checker_utils_bonus.c \
+	$(SRCS_DIR)/push_swap/stack.c \
+	$(SRCS_DIR)/push_swap/stack_utils.c \
+	$(SRCS_DIR)/push_swap/input_validation.c \
+	$(SRCS_DIR)/push_swap/number_validation.c \
+	$(SRCS_DIR)/push_swap/operations_s_p.c \
+	$(SRCS_DIR)/push_swap/operations_rr.c \
+	$(SRCS_DIR)/push_swap/operations_rrr.c
 
 # Object files
 OBJS       = $(SRCS:src/push_swap/%.c=build/push_swap/%.o)

@@ -78,10 +78,10 @@ void	normalize(t_stack *stack)
 int	is_sorted(t_stack *stack)
 {
 	size_t	i;
-	size_t	bool;
 	t_node	*current;
 
-	bool = 0;
+	if (stack->size <= 1)
+		return (1);
 	current = stack->head;
 	i = 0;
 	while (i++ < stack->size - 1)
@@ -89,7 +89,6 @@ int	is_sorted(t_stack *stack)
 		if (current->index > current->next->index)
 			return (0);
 		current = current->next;
-		bool++;
 	}
-	return (bool);
+	return (1);
 }

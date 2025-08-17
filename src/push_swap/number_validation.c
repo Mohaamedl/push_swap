@@ -12,55 +12,42 @@
 
 #include "../../inc/push_swap.h"
 
-static int	validate_number_range(long num, int sign)
+static int	has_only_digits_and_sign(const char *str)
 {
-	if ((sign == 1 && num > INT_MAX) || (sign == -1 && - num < INT_MIN))
+	int	i;
+	int	has_digit;
+
+	i = 0;
+	has_digit = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	if (!str[i])
 		return (0);
-	return (1);
-}
-
-static int	parse_sign(const char *s, int *i)
-{
-	int	sign;
-
-	sign = 1;
-	if (s[*i] == '-' || s[*i] == '+')
+	while (str[i])
 	{
-		if (s[(*i)++] == '-')
-			sign = -1;
-	}
-	return (sign);
-}
-
-static int	validate_digits(const char *s, int start)
-{
-	long	num;
-	int		i;
-	int		sign;
-
-	sign = parse_sign(s, &start);
-	if (!s[start])
-		return (0);
-	num = 0;
-	i = start;
-	while (s[i])
-	{
-		if (!ft_isdigit(s[i]))
+		if (!ft_isdigit(str[i]))
 			return (0);
-		num = num * 10 + (s[i] - '0');
-		if (!validate_number_range(num, sign))
-			return (0);
+		has_digit = 1;
 		i++;
 	}
-	return (1);
+	return (has_digit);
+}
+
+static int	is_in_int_range(const char *str)
+{
+	long	num;
+
+	num = ft_atol(str);
+	return (num >= INT_MIN && num <= INT_MAX);
 }
 
 int	is_valid_integer(const char *s)
 {
-	int	i;
-
 	if (!s || *s == '\0')
 		return (0);
-	i = 0;
-	return (validate_digits(s, i));
+	if (!has_only_digits_and_sign(s))
+		return (0);
+	return (is_in_int_range(s));
 }

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../inc/push_swap.h"
 
-t_node	*pa(t_stack *a, t_stack *b)
+t_node	*pa(t_stack *a, t_stack *b, int print)
 {
 	t_node	*push_node;
 
@@ -22,11 +22,12 @@ t_node	*pa(t_stack *a, t_stack *b)
 		return (NULL);
 	if (push(a, push_node) != 1)
 		return (NULL);
-	ft_printf("pa%s\n", "");
+	if (print)
+		ft_printf("pa%s\n", "");
 	return (push_node);
 }
 
-t_node	*pb(t_stack *a, t_stack *b)
+t_node	*pb(t_stack *a, t_stack *b, int print)
 {
 	t_node	*push_node;
 
@@ -37,34 +38,38 @@ t_node	*pb(t_stack *a, t_stack *b)
 		return (NULL);
 	if (push(b, push_node) != 1)
 		return (NULL);
-	ft_printf("pb%s\n", "");
+	if (print)
+		ft_printf("pb%s\n", "");
 	return (push_node);
 }
 
-int	sa(t_stack *a)
+int	sa(t_stack *a, int print)
 {
 	if (a->size < 2)
 		return (0);
 	swap_top_two(a);
-	ft_printf("sa%s\n", "");
+	if (print)
+		ft_printf("sa%s\n", "");
 	return (1);
 }
 
-int	sb(t_stack *b)
+int	sb(t_stack *b, int print)
 {
 	if (b->size < 2)
 		return (0);
 	swap_top_two(b);
-	ft_printf("sb%s\n", "");
+	if (print)
+		ft_printf("sb%s\n", "");
 	return (1);
 }
 
-int	ss(t_stack *a, t_stack *b)
+int	ss(t_stack *a, t_stack *b, int print)
 {
 	if (a->size < 2 || b->size < 2)
 		return (0);
 	swap_top_two(a);
 	swap_top_two(b);
-	ft_printf("ss%s\n", "");
+	if (print)
+		ft_printf("ss%s\n", "");
 	return (1);
 }

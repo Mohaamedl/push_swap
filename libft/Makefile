@@ -28,6 +28,7 @@ INC_DIR     =   inc
 
 SRC_LIBFT = \
 	$(SRC_DIR)/libft/ft_atoi.c \
+	$(SRC_DIR)/libft/ft_atol.c \
 	$(SRC_DIR)/libft/ft_bzero.c \
 	$(SRC_DIR)/libft/ft_calloc.c \
 	$(SRC_DIR)/libft/ft_isalnum.c \
@@ -35,6 +36,7 @@ SRC_LIBFT = \
 	$(SRC_DIR)/libft/ft_isascii.c \
 	$(SRC_DIR)/libft/ft_isdigit.c \
 	$(SRC_DIR)/libft/ft_isprint.c \
+	$(SRC_DIR)/libft/ft_isspace.c \
 	$(SRC_DIR)/libft/ft_itoa.c \
 	$(SRC_DIR)/libft/ft_memchr.c \
 	$(SRC_DIR)/libft/ft_memcmp.c \

@@ -1,38 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations_rr.c                                    :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaddadi <mhaddadi@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/20 23:21:14 by mhaddadi          #+#    #+#             */
-/*   Updated: 2025/07/20 23:21:22 by mhaddadi         ###   ########.fr       */
+/*   Created: 2025/08/17 00:00:00 by mhaddadi          #+#    #+#             */
+/*   Updated: 2025/08/17 00:00:00 by mhaddadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/push_swap.h"
+#include "libft.h"
 
-int	ra(t_stack *a, int print)
+int	ft_isspace(int c)
 {
-	rotate_stack(a);
-	if (print)
-		ft_printf("ra%s\n", "");
-	return (1);
-}
-
-int	rb(t_stack *b, int print)
-{
-	rotate_stack(b);
-	if (print)
-		ft_printf("rb%s\n", "");
-	return (1);
-}
-
-int	rr(t_stack *a, t_stack *b, int print)
-{
-	rotate_stack(a);
-	rotate_stack(b);
-	if (print)
-		ft_printf("rr%s\n", "");
-	return (1);
+	return (c == ' ' || (c >= 9 && c <= 13));
 }
