@@ -24,7 +24,7 @@ static int	fill_stack(t_stack *a, char **argv, int argc, int start)
 			|| has_duplicate_str(argv, argv[i], i, 0))
 		{
 			write(2, "Error\n", 6);
-			return (0);
+			exit(EXIT_FAILURE);
 		}
 		node = create_node(ft_atoi(argv[i]));
 		if (!node)
@@ -113,8 +113,8 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	if (!parse_and_fill_stack(a, argc, argv, &split))
 	{
-		cleanup_all(a, b, split);
-		return (0);
+		cleanup_all(a, b, NULL);
+		exit(EXIT_FAILURE);
 	}
 	normalize(a);
 	solve_stack(a, b);
