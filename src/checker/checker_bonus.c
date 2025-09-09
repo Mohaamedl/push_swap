@@ -24,7 +24,7 @@ static int	fill_stack(t_stack *a, char **argv, int argc, int start)
 			|| has_duplicate_str(argv, argv[i], i, 0))
 		{
 			write(2, "Error\n", 6);
-			return(0);
+			return (0);
 		}
 		node = create_node(ft_atoi(argv[i]));
 		if (!node)
